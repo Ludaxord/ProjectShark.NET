@@ -18,8 +18,7 @@ ProjectShark provides:
 Installation
 ----------------------
 
-- To run ProjectShark 
-
+- T.B.A
 
 
 Getting Started
@@ -124,6 +123,46 @@ Getting Started
     DriverOptions GetOptions(List<string> options, string browser)
 ``` 
 
+* SharkDriver
+    * Method that set web browser to full screen
+```c#
+    void SetFullScreen(IWebDriver driver)
+``` 
+
+* SharkDriver
+    * Method that set window size of web browser
+```c#
+    void WindowSize(IWebDriver driver, int width = (int) Enumerations.WindowSize.Width,
+                int height = (int) Enumerations.WindowSize.Height)
+``` 
+
+* SharkDriver
+    * Killing all driver and browser processes that runs in background
+```c#
+    void KillBrowserProcesses(string browserName)
+``` 
+
+* SharkDriver
+    * Setting timeout for load page elements
+```c#
+    void SetTimeoutsForItemsVisibility(IWebDriver driver, TimeSpan timeSpan)
+``` 
+
+### ``WindowSize``
+
+* WindowSize
+    * Defines default WindowSize if it won't be override in WindowSize method in SharkScrapper
+    * Default Width of window
+```c#
+      Width
+```    
+* WindowSize
+    * Default Height of window
+```c#
+      Height
+```
+
 TO DO
 ----------------------
-
++ Make SharkScrapper for running page without call selenium package
++ Finish docs for SharkScrapper class
