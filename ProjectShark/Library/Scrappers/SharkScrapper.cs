@@ -11,7 +11,7 @@ namespace ProjectShark.Library.Scrappers{
     /// <summary>
     /// 
     /// </summary>
-    public abstract class BaseScrapper : IScrapper{
+    public abstract class SharkScrapper : IScrapper{
         /// <summary>
         /// 
         /// </summary>

@@ -21,7 +21,7 @@ namespace ProjectShark.Library.Drivers{
         /// <summary>
         /// Getter, Setter for passed scrapper
         /// </summary>
-        protected BaseScrapper Scrapper{ get; set; }
+        protected SharkScrapper Scrapper{ get; set; }
 
         /// <summary>
         /// Getter, Setter for passed browser name
@@ -39,7 +39,7 @@ namespace ProjectShark.Library.Drivers{
         protected TimeSpan TimeOut{ get; set; }
 
         /// <summary>
-        /// Constructor that creates driver with default parameters
+        /// Constructor that create driver with default parameters
         /// </summary>
         /// <param name="browser">passed browser name</param>
         /// <param name="driverPath">passed driver path</param>
@@ -52,27 +52,27 @@ namespace ProjectShark.Library.Drivers{
         }
 
         /// <summary>
-        /// Constructor that creates driver with default parameters and custom scrapper that contains scrapping web page methods
+        /// Constructor that create driver with default parameters and custom scrapper that contains scrapping web page methods
         /// </summary>
         /// <param name="browser">passed browser name</param>
         /// <param name="driverPath">passed driver path</param>
         /// <param name="timeSpan">passed timeout that page will be wait until load</param>
         /// <param name="scrapper">custom scrapper that implements BaseScrapper Interface and can extends BaseScrapper abstract class</param>
-        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, BaseScrapper scrapper) : this(browser,
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, SharkScrapper scrapper) : this(browser,
             driverPath, timeSpan){
             Scrapper = scrapper;
         }
 
 
         /// <summary>
-        /// Constructor that creates driver with default parameters and custom scrapper that contains scrapping web page methods and sets base url of page 
+        /// Constructor that create driver with default parameters and custom scrapper that contains scrapping web page methods and sets base url of page 
         /// </summary>
         /// <param name="browser">passed browser name</param>
         /// <param name="driverPath">passed driver path</param>
         /// <param name="timeSpan">passed timeout that page will be wait until load</param>
         /// <param name="scrapper">custom scrapper that implements BaseScrapper Interface and can extends BaseScrapper abstract class</param>
         /// <param name="url">passed url of page that driver should navigate browser</param>
-        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, BaseScrapper scrapper, string url) :
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, SharkScrapper scrapper, string url) :
             this(browser, driverPath, timeSpan, scrapper){
             TimeOut = timeSpan;
             Browser = browser;
