@@ -2,15 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
+        <Authors>Konrad Uciechowski</Authors>
+        <RepositoryUrl>https://github.com/Ludaxord/ProjectShark.NET</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Selenium.Support" Version="4.0.0-alpha02" />
       <PackageReference Include="Selenium.WebDriver" Version="4.0.0-alpha02" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Library\Scrappers" />
     </ItemGroup>
 
 </Project>

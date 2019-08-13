@@ -1,8 +1,19 @@
+using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
 
 namespace ProjectShark.Library.Interfaces{
-    public interface IDriver{
+    internal interface IDriver{
         DriverOptions GetOptions(List<string> options, string browser);
+        void NavigateToWebPage(IWebDriver driver, string url);
+
+        void SetFullScreen(IWebDriver driver);
+
+        void WindowSize(IWebDriver driver, int width = (int) Enumerations.WindowSize.Width,
+            int height = (int) Enumerations.WindowSize.Height);
+
+        void KillBrowserProcesses(string browser);
+
+        void SetTimeoutsForItemsVisibility(IWebDriver driver, TimeSpan timeSpan);
     }
 }
