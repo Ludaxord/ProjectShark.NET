@@ -93,7 +93,36 @@ Getting Started
 
 ### if you want to create own driver just inherit ``SharkDriver()`` abstract class
 
-  
+* SharkDriver
+    * Abstract class that can be inherit by new driver, defines methods for browser
+    * Constructor that create driver with default parameters
+```c#
+    SharkDriver(string browser, string driverPath, TimeSpan timeSpan)
+``` 
+
+* SharkDriver
+    * Constructor that create driver with default parameters and custom scrapper that contains scrapping web page methods
+```c#
+    SharkDriver(string browser, string driverPath, TimeSpan timeSpan, SharkScrapper scrapper)
+``` 
+
+* SharkDriver
+    * Constructor that create driver with default parameters and custom scrapper that contains scrapping web page methods and sets base url of page 
+```c#
+    SharkDriver(string browser, string driverPath, TimeSpan timeSpan, SharkScrapper scrapper)
+``` 
+
+* SharkDriver
+    * Abstract method that need to be implemented in every SharkDriver class. It defines Driver that will be loaded to package
+```c#
+    abstract IWebDriver InitWebDriver(string driverPath)
+``` 
+
+* SharkDriver
+    * Method that returns options for web driver
+```c#
+    DriverOptions GetOptions(List<string> options, string browser)
+``` 
 
 TO DO
 ----------------------
