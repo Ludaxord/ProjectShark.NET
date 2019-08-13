@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace ProjectShark.Library.Extensions{
     internal static class ListExtension{
         
-        private static readonly List<string> _defaultOptions = new List<string>{
+        private static readonly List<string> DefaultOptions = new List<string>{
             "--disable-gpu",
             "--disable-extensions",
             "disable-gpu",
@@ -20,7 +20,7 @@ namespace ProjectShark.Library.Extensions{
         };
         
         internal static void SetDefaultOptions(this List<string> options){
-            options.AddRange(_defaultOptions);
+            options.AddRange(DefaultOptions);
         }
     }
 }

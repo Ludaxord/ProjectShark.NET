@@ -9,6 +9,9 @@ using ProjectShark.Library.Interfaces;
 
 namespace ProjectShark.Library.Drivers{
     public abstract class SharkDriver : IDriver{
+        protected IWebDriver Driver{ get; set; }
+        
+        protected IScrapper Scrapper{ get; set; }
         protected string Browser{ get; set; }
         protected string DriverPath{ get; set; }
         protected TimeSpan TimeOut{ get; set; }
@@ -19,16 +22,23 @@ namespace ProjectShark.Library.Drivers{
             DriverPath = driverPath;
             InitDriver();
         }
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, IScrapper scrapper){
+            TimeOut = timeSpan;
+            Browser = browser;
+            DriverPath = driverPath;
+            InitDriver();
+            Scrapper = scrapper;
+        }
 
         protected void InitDriver(){
-            var driver = InitWebDriver(DriverPath);
-            WindowSize(driver);
-            SetFullScreen(driver);
-            SetTimeoutsForItemsVisibility(driver, TimeOut);
+            Driver = InitWebDriver(DriverPath);
+            WindowSize(Driver);
+            SetFullScreen(Driver);
+            SetTimeoutsForItemsVisibility(Driver, TimeOut);
         }
 
         protected abstract IWebDriver InitWebDriver(string driverPath);
-
+        
         public DriverOptions GetOptions(List<string> options, string browser){
             DriverOptions driverOptions = null;
 
