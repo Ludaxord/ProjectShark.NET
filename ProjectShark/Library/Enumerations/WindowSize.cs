@@ -1,5 +1,15 @@
 namespace ProjectShark.Library.Enumerations{
+    /// <summary>
+    /// 
+    /// </summary>
     public enum WindowSize{
-        Width = 1920, Height = 1080
+        /// <summary>
+        /// 
+        /// </summary>
+        Width = 1920, 
+        /// <summary>
+        /// 
+        /// </summary>
+        Height = 1080
     }
 }

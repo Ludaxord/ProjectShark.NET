@@ -5,8 +5,6 @@ using OpenQA.Selenium;
 namespace ProjectShark.Library.Interfaces{
     internal interface IDriver{
         DriverOptions GetOptions(List<string> options, string browser);
-        void NavigateToWebPage(IWebDriver driver, string url);
-
         void SetFullScreen(IWebDriver driver);
 
         void WindowSize(IWebDriver driver, int width = (int) Enumerations.WindowSize.Width,

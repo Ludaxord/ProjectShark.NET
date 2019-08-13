@@ -6,30 +6,92 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using ProjectShark.Library.Extensions;
 using ProjectShark.Library.Interfaces;
+using ProjectShark.Library.Scrappers;
 
 namespace ProjectShark.Library.Drivers{
+    /// <summary>
+    /// Abstract class that can be inherit by new driver, defines methods for browser
+    /// </summary>
     public abstract class SharkDriver : IDriver{
+        /// <summary>
+        /// Getter, Setter for passed driver
+        /// </summary>
         protected IWebDriver Driver{ get; set; }
-        
-        protected IScrapper Scrapper{ get; set; }
+
+        /// <summary>
+        /// Getter, Setter for passed scrapper
+        /// </summary>
+        protected BaseScrapper Scrapper{ get; set; }
+
+        /// <summary>
+        /// Getter, Setter for passed browser name
+        /// </summary>
         protected string Browser{ get; set; }
+
+        /// <summary>
+        /// Getter, Setter for passed driver path
+        /// </summary>
         protected string DriverPath{ get; set; }
+
+        /// <summary>
+        /// Getter, Setter for passed timeout
+        /// </summary>
         protected TimeSpan TimeOut{ get; set; }
 
+        /// <summary>
+        /// Constructor that creates driver with default parameters
+        /// </summary>
+        /// <param name="browser">passed browser name</param>
+        /// <param name="driverPath">passed driver path</param>
+        /// <param name="timeSpan">passed timeout that page will be wait until load</param>
         protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan){
             TimeOut = timeSpan;
             Browser = browser;
             DriverPath = driverPath;
             InitDriver();
         }
-        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, IScrapper scrapper){
+
+        /// <summary>
+        /// Constructor that creates driver with default parameters and custom scrapper that contains scrapping web page methods
+        /// </summary>
+        /// <param name="browser">passed browser name</param>
+        /// <param name="driverPath">passed driver path</param>
+        /// <param name="timeSpan">passed timeout that page will be wait until load</param>
+        /// <param name="scrapper">custom scrapper that implements BaseScrapper Interface and can extends BaseScrapper abstract class</param>
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, BaseScrapper scrapper) : this(browser,
+            driverPath, timeSpan){
+            Scrapper = scrapper;
+        }
+
+
+        /// <summary>
+        /// Constructor that creates driver with default parameters and custom scrapper that contains scrapping web page methods and sets base url of page 
+        /// </summary>
+        /// <param name="browser">passed browser name</param>
+        /// <param name="driverPath">passed driver path</param>
+        /// <param name="timeSpan">passed timeout that page will be wait until load</param>
+        /// <param name="scrapper">custom scrapper that implements BaseScrapper Interface and can extends BaseScrapper abstract class</param>
+        /// <param name="url">passed url of page that driver should navigate browser</param>
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, BaseScrapper scrapper, string url) :
+            this(browser, driverPath, timeSpan, scrapper){
             TimeOut = timeSpan;
             Browser = browser;
             DriverPath = driverPath;
             InitDriver();
             Scrapper = scrapper;
+            Scrapper.Url = url;
         }
 
+        /// <summary>
+        /// Abstract method that need to be implemented in every SharkDriver class. It defines Driver that will be loaded to package
+        /// </summary>
+        /// <param name="driverPath">passed driver path</param>
+        /// <returns>Driver that will be used in browser lifecycle</returns>
+        protected abstract IWebDriver InitWebDriver(string driverPath);
+
+        /// <summary>
+        /// Initializer of default functions in WebDriver
+        /// </summary>
         protected void InitDriver(){
             Driver = InitWebDriver(DriverPath);
             WindowSize(Driver);
@@ -37,8 +99,12 @@ namespace ProjectShark.Library.Drivers{
             SetTimeoutsForItemsVisibility(Driver, TimeOut);
         }
 
-        protected abstract IWebDriver InitWebDriver(string driverPath);
-        
+        /// <summary>
+        /// Method that returns options for web driver
+        /// </summary>
+        /// <param name="options">list of options passed to driver</param>
+        /// <param name="browser">passed browser name available names: chrome, firefox</param>
+        /// <returns>Browser options</returns>
         public DriverOptions GetOptions(List<string> options, string browser){
             DriverOptions driverOptions = null;
 
@@ -61,16 +127,11 @@ namespace ProjectShark.Library.Drivers{
             return driverOptions;
         }
 
-        public void NavigateToWebPage(IWebDriver driver, string url){
-            try{
-                driver.NavigateToWebPage(url);
-            }
-            catch (Exception e){
-                Console.WriteLine(e);
-                throw new Exception($"Cannot start browser with URL: {url}");
-            }
-        }
-
+        /// <summary>
+        /// Method that set web browser to full screen
+        /// </summary>
+        /// <param name="driver">passed driver</param>
+        /// <exception cref="Exception">Problem with driver</exception>
         public void SetFullScreen(IWebDriver driver){
             try{
                 driver.SetFullScreen();
@@ -81,6 +142,13 @@ namespace ProjectShark.Library.Drivers{
             }
         }
 
+        /// <summary>
+        /// Method that set window size of web browser
+        /// </summary>
+        /// <param name="driver">passed driver</param>
+        /// <param name="width">width that window will have -> default 1920</param>
+        /// <param name="height">width that window will have -> default 1080</param>
+        /// <exception cref="Exception">Problem with setting window size</exception>
         public void WindowSize(IWebDriver driver, int width = (int) Enumerations.WindowSize.Width,
             int height = (int) Enumerations.WindowSize.Height){
             try{
@@ -92,6 +160,11 @@ namespace ProjectShark.Library.Drivers{
             }
         }
 
+        /// <summary>
+        /// Killing all driver and browser processes that runs in background
+        /// </summary>
+        /// <param name="browserName">browser name, available names: chrome, firefox</param>
+        /// <exception cref="Exception">Problem with killing process</exception>
         public void KillBrowserProcesses(string browserName){
             var processes = new List<Process>();
 
@@ -122,6 +195,12 @@ namespace ProjectShark.Library.Drivers{
             }
         }
 
+        /// <summary>
+        /// Setting timeout for load page elements
+        /// </summary>
+        /// <param name="driver">passed driver</param>
+        /// <param name="timeSpan">passed timespan </param>
+        /// <exception cref="Exception">Problem with setting timeout</exception>
         public void SetTimeoutsForItemsVisibility(IWebDriver driver, TimeSpan timeSpan){
             try{
                 driver.SetBrowserLoadingTimeout(timeSpan);
