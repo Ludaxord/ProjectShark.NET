@@ -74,6 +74,8 @@ Documentation
 
 * SharkChromeDriver
     * Chrome driver (chromeDriver) implementation of SharkDriver abstract class.
+   
+* SharkChromeDriver
     * Constructor that create driver with default parameters, Inherits base constructor of SharkDriver with chrome as browser
 
 ```c#
@@ -95,7 +97,7 @@ Documentation
      SharkChromeDriver(string driverPath, TimeSpan timeSpan, SharkScrapper scrapper, string url)
 ```
 
-* InitWebDriver
+* SharkChromeDriver
     * Implementation of abstract method InitWebDriver from SharkDriver abstract class.
       Method return ChromeWebDriver specified by browser
 ```c#
@@ -106,6 +108,8 @@ Documentation
 
 * SharkFirefoxDriver
     * Firefox driver (geckoDriver) implementation of SharkDriver abstract class.
+    
+* SharkChromeDriver
     * Constructor that create driver with default parameters, Inherits base constructor of SharkDriver with Firefox as browser
 
 ```c#
@@ -127,7 +131,7 @@ Documentation
      SharkFirefoxDriver(string driverPath, TimeSpan timeSpan, SharkScrapper scrapper, string url)
 ```
 
-* InitWebDriver
+* SharkFirefoxDriver
     * Implementation of abstract method InitWebDriver from SharkDriver abstract class.
       Method return FirefoxWebDriver specified by browser
 ```c#
@@ -138,6 +142,8 @@ Documentation
 
 * SharkDriver
     * Abstract class that can be inherit by new driver, defines methods for browser
+    
+* SharkDriver
     * Constructor that create driver with default parameters
 ```c#
     SharkDriver(string browser, string driverPath, TimeSpan timeSpan)
@@ -196,6 +202,8 @@ Documentation
 
 * WindowSize
     * Defines default WindowSize if it won't be override in WindowSize method in SharkScrapper
+
+* WindowSize
     * Default Width of window
 ```c#
       Width
@@ -394,10 +402,136 @@ Documentation
 * SharkRequest
     * sealed class defines static download of page and make request without call selenium.
 
+* SharkRequest
+    * Getter, Setter for passed url
+```c#
+      string Url{ get; set; }
+```
+
+* SharkRequest
+    * Getter, Setter for passed html
+```c#
+      string Html{ get; set; }
+```
+
+* SharkRequest
+    * Getter, Setter for passed htmlDocument
+```c#
+      HtmlDocument HtmlDocument{ get; set; }
+```
+
+* SharkRequest
+    * Getter, Setter for passed scrapper
+```c#
+      SharkStaticScrapper Scrapper{ get; set; }
+```
+
+* SharkRequest
+    * Constructor that create request with default parameters
+```c#
+      SharkRequest(string url, SharkStaticScrapper scrapper)
+```
+
+* SharkRequest
+    * Initializer of request
+```c#
+      void InitRequest()
+```
+
+* SharkRequest
+    * Get html from url. Make HTTP Request to page
+```c#
+      string GetHtml(string url)
+```
+
+* SharkRequest
+    * Change html to HTMLDocument object
+```c#
+      HtmlDocument GetDocument(string html)
+```
+
 ### To make action on scrapping web page without run selenium you need to create your own scrapper class and extends ``SharkStaticScrapper`` abstract class
 
 * SharkStaticScrapper
     * Abstract class that can be inherit by web page scrapper, defines methods for scrapping web page. It allows to make actions with scrapping web page without selenium features, packed in methods of class.
+
+* SharkStaticScrapper
+    * Getter, Setter for passed url
+```c#
+      string Url{ get; set; }
+```
+
+* SharkStaticScrapper
+    * Getter, Setter for passed html
+```c#
+      string Html{ get; set; }
+```
+
+* SharkStaticScrapper
+    * Find elements by class name in html
+```c#
+      IEnumerable<HtmlNode> GetElementsByClassName(HtmlDocument htmlDocument, string className)
+```
+
+* SharkStaticScrapper
+    * Find elements by tag name in html
+```c#
+      IEnumerable<HtmlNode> GetElementsByTagName(HtmlDocument htmlDocument, string tagName)
+```
+
+* SharkStaticScrapper
+    * Find element by tag name in html
+```c#
+      HtmlNode GetElementByTagName(HtmlDocument htmlDocument, string tagName)
+```
+
+* SharkStaticScrapper
+    * Get all elements from parent node
+```c#
+      IEnumerable<HtmlNode> GetElementsFromParent(HtmlNode htmlNode)
+```
+
+* SharkStaticScrapper
+    * Finding elements by xPath
+```c#
+      IEnumerable<HtmlNode> GetElementsByXPath(HtmlDocument htmlDocument, string xPath)
+```
+
+* SharkStaticScrapper
+    * Finding element by xPath
+```c#
+      HtmlNode GetElementByXPath(HtmlDocument htmlDocument, string xPath)
+```
+
+* SharkStaticScrapper
+    * Find element with passed class name
+```c#
+      HtmlNode GetElementByClassName(HtmlDocument htmlDocument, string className)
+```
+
+* SharkStaticScrapper
+    * Find element by id
+```c#
+      HtmlNode GetElementById(HtmlDocument htmlDocument, string id)
+```
+
+* SharkStaticScrapper
+    * Finding Attribute of element
+```c#
+      HtmlAttribute GetElementAttributeFromNode(HtmlNode htmlNode, string attribute)
+```
+
+* SharkStaticScrapper
+    * Finding value of attribute
+```c#
+      string GetElementAttributeValue(HtmlNode htmlNode, string attribute)
+```
+
+* SharkStaticScrapper
+    * Return full page html
+```c#
+      string GetFullPage(HtmlDocument htmlDocument)
+```
 
 License
 ----------------------
