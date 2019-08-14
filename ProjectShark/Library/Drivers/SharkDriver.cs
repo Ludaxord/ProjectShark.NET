@@ -19,6 +19,11 @@ namespace ProjectShark.Library.Drivers{
         protected IWebDriver Driver{ get; set; }
 
         /// <summary>
+        /// Getter, Setter for passed options
+        /// </summary>
+        protected List<string> Options{ get; set; }
+
+        /// <summary>
         /// Getter, Setter for passed scrapper
         /// </summary>
         protected SharkScrapper Scrapper{ get; set; }
@@ -44,10 +49,12 @@ namespace ProjectShark.Library.Drivers{
         /// <param name="browser">passed browser name</param>
         /// <param name="driverPath">passed driver path</param>
         /// <param name="timeSpan">passed timeout that page will be wait until load</param>
-        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan){
+        /// <param name="options">passed options of web browser if it is set to null it takes default options of web browser</param>
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, List<string> options = null){
             TimeOut = timeSpan;
             Browser = browser;
             DriverPath = driverPath;
+            Options = options;
             InitDriver();
         }
 
@@ -58,8 +65,10 @@ namespace ProjectShark.Library.Drivers{
         /// <param name="driverPath">passed driver path</param>
         /// <param name="timeSpan">passed timeout that page will be wait until load</param>
         /// <param name="scrapper">custom scrapper that implements BaseScrapper and can extends BaseScrapper abstract class</param>
-        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, SharkScrapper scrapper) : this(browser,
-            driverPath, timeSpan){
+        /// <param name="options">passed options of web browser if it is set to null it takes default options of web browser</param>
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan,
+            SharkScrapper scrapper, List<string> options = null) : this(browser,
+            driverPath, timeSpan, options){
             Scrapper = scrapper;
         }
 
@@ -72,8 +81,11 @@ namespace ProjectShark.Library.Drivers{
         /// <param name="timeSpan">passed timeout that page will be wait until load</param>
         /// <param name="scrapper">custom scrapper that implements BaseScrapper and can extends BaseScrapper abstract class</param>
         /// <param name="url">passed url of page that driver should navigate browser</param>
-        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan, SharkScrapper scrapper, string url) :
-            this(browser, driverPath, timeSpan, scrapper){
+        /// <param name="options">passed options of web browser if it is set to null it takes default options of web browser</param>
+        protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan,
+            SharkScrapper scrapper,
+            string url, List<string> options = null) :
+            this(browser, driverPath, timeSpan, scrapper, options){
             TimeOut = timeSpan;
             Browser = browser;
             DriverPath = driverPath;
@@ -112,7 +124,7 @@ namespace ProjectShark.Library.Drivers{
                 options = new List<string>();
                 options.SetDefaultOptions();
             }
-
+            
             switch (browser){
                 case "chrome":
                     driverOptions = new ChromeOptions();
