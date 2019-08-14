@@ -148,7 +148,7 @@ Getting Started
     void SetTimeoutsForItemsVisibility(IWebDriver driver, TimeSpan timeSpan)
 ``` 
 
-### ``WindowSize``
+### If you want to set default window size there is enum ``WindowSize`` for default browser window size
 
 * WindowSize
     * Defines default WindowSize if it won't be override in WindowSize method in SharkScrapper
@@ -162,7 +162,7 @@ Getting Started
       Height
 ```
 
-### ``SharkScrapper``
+### To make action on scrapping web page you need to create your own scrapper class and extends ``SharkScrapper`` abstract class
 
 * SharkScrapper
     * Abstract class that can be inherit by web page scrapper, defines methods for scrapping web page. It allows to make actions with scrapping web page by using selenium features, packed in methods of class.
