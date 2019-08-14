@@ -86,11 +86,6 @@ namespace ProjectShark.Library.Drivers{
             SharkScrapper scrapper,
             string url, List<string> options = null) :
             this(browser, driverPath, timeSpan, scrapper, options){
-            TimeOut = timeSpan;
-            Browser = browser;
-            DriverPath = driverPath;
-            InitDriver();
-            Scrapper = scrapper;
             Scrapper.Url = url;
         }
 

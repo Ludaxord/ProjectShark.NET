@@ -507,6 +507,7 @@ namespace ProjectShark.Library.Scrappers{
         /// <exception cref="Exception">Problem with starting browser</exception>
         public void NavigateToWebPage(IWebDriver driver, string url){
             try{
+                url = url.UrlGenerator();
                 Url = url;
                 driver.NavigateToWebPage(url);
             }
