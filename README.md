@@ -15,6 +15,12 @@ ProjectShark provides:
 - Classes that in easy way create driver and run browser with selenium.
 - Abstract classes that can be inherit with all methods provided by scrapping engine and driver engine.
 
+Requirements
+----------------------
+
+- Driver of choice. It can be geckoDriver, chromeDriver or any other driver that selenium support. For more info about drivers check [Selenium Drivers Docs](https://www.seleniumhq.org/projects/webdriver/)
+- Web browser of choice. It can be Firefox, Chrome or any other that selenium package support.
+
 Installation
 ----------------------
 
