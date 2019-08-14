@@ -54,7 +54,7 @@ namespace ProjectShark.Library.Drivers{
         /// <param name="driverPath">passed driver path</param>
         /// <returns>FirefoxWebDriver</returns>
         protected override IWebDriver InitWebDriver(string driverPath){
-            var options = GetOptions(null, Browser) as FirefoxOptions;
+            var options = GetOptions(Options, Browser) as FirefoxOptions;
             var firefoxDriver = new FirefoxDriver(driverPath, options);
             return firefoxDriver;
         }

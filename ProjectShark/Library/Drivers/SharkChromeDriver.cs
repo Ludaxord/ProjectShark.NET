@@ -54,7 +54,7 @@ namespace ProjectShark.Library.Drivers{
         /// <param name="driverPath">passed driver path</param>
         /// <returns>ChromeWebDriver</returns>
         protected override IWebDriver InitWebDriver(string driverPath){
-            var options = GetOptions(null, Browser) as ChromeOptions;
+            var options = GetOptions(Options, Browser) as ChromeOptions;
             var chromeDriver = new ChromeDriver(driverPath, options);
             return chromeDriver;
         }
