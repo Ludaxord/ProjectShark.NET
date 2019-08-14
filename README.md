@@ -31,6 +31,37 @@ Install-Package ProjectShark
 Getting Started
 ----------------------
 
+example of usage:
+
+```c#
+    class Program{
+        static void Main(string[] args){
+            var sharkRun = new SharkRun();
+            sharkRun.RunDriver();
+        }
+
+        private class SharkExampleScrapper : SharkScrapper{
+        }
+
+        private class SharkRun{
+            public void RunDriver(){
+                var options = new List<string>();
+                var firefoxDriver = new SharkFirefoxDriver(
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    TimeSpan.FromMinutes(1),
+                    new SharkExampleScrapper(),
+                    "https://www.example.com/",
+                    options
+                );
+                
+            }
+        }
+    }
+```
+
+Documentation
+----------------------
+
 ### To run package simply run one of SharkDriver class.
 
 ### ``SharkChromeDriver()``
