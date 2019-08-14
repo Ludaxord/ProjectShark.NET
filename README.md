@@ -73,9 +73,8 @@ example of usage with SharkRequest:
     
             private class SharkStaticRun{
                 public void RunDriver(){
-                    var request = new SharkRequest("https://app.esticrm.pl", new SharkStaticExampleScrapper());
+                    var request = new SharkRequest("https://www.example.com/", new SharkStaticExampleScrapper());
                     var html = request.Scrapper.GetFullPage(request.HtmlDocument);
-                    Console.WriteLine(html);
                 }
             }
        }
