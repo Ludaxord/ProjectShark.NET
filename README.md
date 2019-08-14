@@ -61,8 +61,25 @@ example of usage with SharkDriver:
 
 example of usage with SharkRequest:
 
-- T.B.A
-
+```c#
+        class Program{
+            static void Main(string[] args){
+                var sharkStaticRun = new SharkStaticRun();
+                sharkStaticRun.RunDriver();
+            }
+    
+            private class SharkStaticExampleScrapper : SharkStaticScrapper{
+            }
+    
+            private class SharkStaticRun{
+                public void RunDriver(){
+                    var request = new SharkRequest("https://app.esticrm.pl", new SharkStaticExampleScrapper());
+                    var html = request.Scrapper.GetFullPage(request.HtmlDocument);
+                    Console.WriteLine(html);
+                }
+            }
+       }
+```
 
 
 Documentation
