@@ -67,8 +67,12 @@ namespace ProjectShark.Library.Drivers{
         /// <param name="scrapper">custom scrapper that implements BaseScrapper and can extends BaseScrapper abstract class</param>
         /// <param name="options">passed options of web browser if it is set to null it takes default options of web browser</param>
         protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan,
-            SharkScrapper scrapper, List<string> options = null) : this(browser,
-            driverPath, timeSpan, options){
+            SharkScrapper scrapper, List<string> options = null){
+            TimeOut = timeSpan;
+            Browser = browser;
+            DriverPath = driverPath;
+            Options = options;
+            InitDriver();
             Scrapper = scrapper;
         }
 
@@ -84,8 +88,13 @@ namespace ProjectShark.Library.Drivers{
         /// <param name="options">passed options of web browser if it is set to null it takes default options of web browser</param>
         protected SharkDriver(string browser, string driverPath, TimeSpan timeSpan,
             SharkScrapper scrapper,
-            string url, List<string> options = null) :
-            this(browser, driverPath, timeSpan, scrapper, options){
+            string url, List<string> options = null){
+            TimeOut = timeSpan;
+            Browser = browser;
+            DriverPath = driverPath;
+            Options = options;
+            InitDriver();
+            Scrapper = scrapper;
             Scrapper.Url = url;
         }
 
@@ -119,7 +128,7 @@ namespace ProjectShark.Library.Drivers{
                 options = new List<string>();
                 options.SetDefaultOptions();
             }
-            
+
             switch (browser){
                 case "chrome":
                     driverOptions = new ChromeOptions();
