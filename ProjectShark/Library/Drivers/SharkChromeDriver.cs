@@ -21,7 +21,7 @@ namespace ProjectShark.Library.Drivers{
         /// </summary>
         /// <param name="driverPath">passed driver path</param>
         /// <param name="timeSpan">passed timeout that page will be wait until load</param>
-        /// <param name="scrapper">custom scrapper that implements BaseScrapper Interface and can extends BaseScrapper abstract class</param>
+        /// <param name="scrapper">custom scrapper that implements BaseScrapper and can extends BaseScrapper abstract class</param>
         public SharkChromeDriver(string driverPath, TimeSpan timeSpan, SharkScrapper scrapper) : base("chrome",
             driverPath, timeSpan, scrapper){
         }
@@ -32,7 +32,7 @@ namespace ProjectShark.Library.Drivers{
         /// </summary>
         /// <param name="driverPath">passed driver path</param>
         /// <param name="timeSpan">passed timeout that page will be wait until load</param>
-        /// <param name="scrapper">custom scrapper that implements BaseScrapper Interface and can extends BaseScrapper abstract class</param>
+        /// <param name="scrapper">custom scrapper that implements BaseScrapper and can extends BaseScrapper abstract class</param>
         /// <param name="url">passed url of page that driver should navigate browser</param>
         public SharkChromeDriver(string driverPath, TimeSpan timeSpan, SharkScrapper scrapper, string url) : base(
             "chrome",

@@ -162,7 +162,189 @@ Getting Started
       Height
 ```
 
+### ``SharkScrapper``
+
+* SharkScrapper
+    * Abstract class that can be inherit by web page scrapper, defines methods for scrapping web page. It allows to make actions with scrapping web page by using selenium features, packed in methods of class.
+
+* SharkScrapper
+    *  Getter setter to set actual web page
+    
+       TODO: listener of url change in automation process
+```c#
+      string Url{ get; set; }
+```
+
+* SharkScrapper
+    * Cast driver to JavaScriptExecutor Interface
+```c#
+      IJavaScriptExecutor CreateJavaScriptExecutor(IWebDriver driver)
+```
+
+* SharkScrapper
+    * Find element in scrapped web page by class name. Note that if there is more than one element with passed className it will return only first one. To return collection of element check GetElementsByClassName method
+```c#
+      IWebElement GetElementByClassName(IWebDriver webDriver, string className)
+```
+
+* SharkScrapper
+    * Find element in scrapped web page by tag name
+```c#
+      IWebElement GetElementByTagName(IWebDriver webDriver, string tagName)
+```
+
+* SharkScrapper
+    * Return full page source code (html, css, javascript, etc.)
+```c#
+      string GetFullPage(IWebDriver driver)
+```
+
+* SharkScrapper
+    * Find element inside parent web element
+```c#
+      IWebElement GetElementFromParentBySelector(IWebElement webDriver, By selector)
+```
+
+* SharkScrapper
+    * Find collection of elements in scrapped web page by class name.
+```c#
+      ReadOnlyCollection<IWebElement> GetElementsByClassName(IWebDriver webDriver, string className)
+```
+
+* SharkScrapper
+    * Find collection of elements in parent web element by class name.
+```c#
+      ReadOnlyCollection<IWebElement>
+            GetElementsFromParentByClassName(IWebElement webElement, string className)
+```
+
+* SharkScrapper
+    * Find collection of elements in parent web element by selenium selector.
+```c#
+      ReadOnlyCollection<IWebElement> GetElementsFromParentBySelector(IWebElement webDriver, By selector)
+```
+
+* SharkScrapper
+    * Find collection of elements on web page by tag name.
+```c#
+      ReadOnlyCollection<IWebElement> GetElementsByTagName(IWebDriver webDriver, string tagName)
+```
+
+* SharkScrapper
+    * Find element on web page by id.
+```c#
+      IWebElement GetElementById(IWebDriver webDriver, string id)
+```
+
+* SharkScrapper
+    * Find element on web page by xPath.
+```c#
+      IWebElement GetElementByXPath(IWebDriver webDriver, string xPath)
+```
+
+* SharkScrapper
+    * Find collection of elements on web page by xPath.
+```c#
+      ReadOnlyCollection<IWebElement> GetElementsByXPath(IWebDriver webDriver, string xPath)
+```
+
+* 
+    * Check if element has desired class name
+```c#
+      bool ElementHasClass(IWebElement element, string active)
+```
+
+*
+    * Change focus of main driver to iFrame
+```c#
+      IWebDriver ChangeDriverFocusToIFrame(IWebDriver driver, IWebElement element, By selector)
+```
+
+*
+    * Moving to element by specific offset
+```c#
+      Actions CreateActionsWithMovementToElementByOffset(IWebDriver driver, IWebElement element, int offsetX,
+                  int offsetY)
+```
+
+*
+    * Moving by specific offset
+```c#
+      Actions CreateActionsWithMovementByOffset(IWebDriver driver, int offsetX, int offsetY)
+```
+
+*
+    * Create new action that can be made on web driver
+```c#
+      Actions CreateActions(IWebDriver driver)
+```
+
+*
+    * Moving to element
+```c#
+      Actions CreateActionsWithMovementToElement(IWebDriver driver, IWebElement element)
+```
+
+*
+    * Back to default driver if driver was set to iFrame
+```c#
+      IWebDriver BackToMainDriver(IWebDriver driver)
+```
+
+*
+    * Check if element exists on web page by selenium based selector
+```c#
+      bool CheckIfElementExists(IWebDriver driver, By selector)
+```
+
+*
+    * Check if element exists has children elements by selenium based selector
+```c#
+      bool CheckIfElementHasChildren(IWebElement element, By selector)
+```
+
+*
+    * Create Web Driver wait object
+```c#
+      WebDriverWait GetDriverWait(IWebDriver webDriver, TimeSpan forTime)
+```
+
+*
+    * set timeout until element will be clickable
+```c#
+      IWebElement GetElementClickableWait(WebDriverWait wait, IWebElement forElement)
+```
+
+*
+    * set timeout until element will be visible
+```c#
+      IWebElement GetElementWaitForVisibility(WebDriverWait wait, By selector)
+```
+
+*
+    * set timeout until element will be enable
+```c#
+      bool GetElementWaitForEnabled(WebDriverWait wait, IWebElement forElement)
+```
+
+*
+    * sending keys to e.g. Input that need some kind of value
+```c#
+      void WaitWithSendKeys(IWebDriver driver, TimeSpan forTime, By selector, string keys)
+```
+
+*
+    * Navigate browser to web page with passed URL
+```c#
+      void NavigateToWebPage(IWebDriver driver, string url)
+```
+
+*
+    * Refresh actual web page
+```c#
+      void RefreshPage(IWebDriver driver)
+```
+
 TO DO
 ----------------------
-+ Make SharkScrapper for running page without call selenium package
-+ Finish docs for SharkScrapper class
++ Make SharkScrapper for scrapping page without call selenium package
