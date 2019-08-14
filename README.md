@@ -24,7 +24,8 @@ Requirements
 Installation
 ----------------------
 
-- T.B.A
+You can either download the source and compile or use nuget at http://nuget.org. To install with nuget:
+Install-Package ProjectShark
 
 
 Getting Started
