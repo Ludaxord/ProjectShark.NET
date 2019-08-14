@@ -392,12 +392,12 @@ Documentation
 ### if you want to make web scrapping without run selenium and it's drivers call class ``SharkRequest()``
 
 * SharkRequest
-    * 
+    * sealed class defines static download of page and make request without call selenium.
 
 ### To make action on scrapping web page without run selenium you need to create your own scrapper class and extends ``SharkStaticScrapper`` abstract class
 
 * SharkStaticScrapper
-    * 
+    * Abstract class that can be inherit by web page scrapper, defines methods for scrapping web page. It allows to make actions with scrapping web page without selenium features, packed in methods of class.
 
 License
 ----------------------
