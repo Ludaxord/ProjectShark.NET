@@ -6,6 +6,7 @@ using OpenQA.Selenium.Support.UI;
 using ProjectShark.Library.Extensions;
 using ProjectShark.Library.Interfaces;
 using SeleniumExtras.WaitHelpers;
+using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace ProjectShark.Library.Scrappers{
     /// <summary>
