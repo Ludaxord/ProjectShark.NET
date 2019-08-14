@@ -4,6 +4,7 @@
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <Authors>Konrad Uciechowski</Authors>
         <RepositoryUrl>https://github.com/Ludaxord/ProjectShark.NET</RepositoryUrl>
+        <PackageLicenseUrl>https://github.com/Ludaxord/ProjectShark.NET/blob/master/LICENSE</PackageLicenseUrl>
     </PropertyGroup>
     
     <ItemGroup>
