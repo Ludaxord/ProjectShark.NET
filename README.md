@@ -355,3 +355,11 @@ Getting Started
 TO DO
 ----------------------
 + Make SharkScrapper for scrapping page without call selenium package
+
+
+License
+----------------------
+
+Licensed under MIT.
+
+For full License and included software licenses please see LICENSE.txt
