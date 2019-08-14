@@ -31,7 +31,7 @@ Install-Package ProjectShark
 Getting Started
 ----------------------
 
-example of usage:
+example of usage with SharkDriver:
 
 ```c#
     class Program{
@@ -58,6 +58,12 @@ example of usage:
         }
     }
 ```
+
+example of usage with SharkRequest:
+
+- T.B.A
+
+
 
 Documentation
 ----------------------
@@ -286,107 +292,112 @@ Documentation
       ReadOnlyCollection<IWebElement> GetElementsByXPath(IWebDriver webDriver, string xPath)
 ```
 
-* 
+* SharkScrapper
     * Check if element has desired class name
 ```c#
       bool ElementHasClass(IWebElement element, string active)
 ```
 
-*
+* SharkScrapper
     * Change focus of main driver to iFrame
 ```c#
       IWebDriver ChangeDriverFocusToIFrame(IWebDriver driver, IWebElement element, By selector)
 ```
 
-*
+* SharkScrapper
     * Moving to element by specific offset
 ```c#
       Actions CreateActionsWithMovementToElementByOffset(IWebDriver driver, IWebElement element, int offsetX,
                   int offsetY)
 ```
 
-*
+* SharkScrapper
     * Moving by specific offset
 ```c#
       Actions CreateActionsWithMovementByOffset(IWebDriver driver, int offsetX, int offsetY)
 ```
 
-*
+* SharkScrapper
     * Create new action that can be made on web driver
 ```c#
       Actions CreateActions(IWebDriver driver)
 ```
 
-*
+* SharkScrapper
     * Moving to element
 ```c#
       Actions CreateActionsWithMovementToElement(IWebDriver driver, IWebElement element)
 ```
 
-*
+* SharkScrapper
     * Back to default driver if driver was set to iFrame
 ```c#
       IWebDriver BackToMainDriver(IWebDriver driver)
 ```
 
-*
+* SharkScrapper
     * Check if element exists on web page by selenium based selector
 ```c#
       bool CheckIfElementExists(IWebDriver driver, By selector)
 ```
 
-*
+* SharkScrapper
     * Check if element exists has children elements by selenium based selector
 ```c#
       bool CheckIfElementHasChildren(IWebElement element, By selector)
 ```
 
-*
+* SharkScrapper
     * Create Web Driver wait object
 ```c#
       WebDriverWait GetDriverWait(IWebDriver webDriver, TimeSpan forTime)
 ```
 
-*
+* SharkScrapper
     * set timeout until element will be clickable
 ```c#
       IWebElement GetElementClickableWait(WebDriverWait wait, IWebElement forElement)
 ```
 
-*
+* SharkScrapper
     * set timeout until element will be visible
 ```c#
       IWebElement GetElementWaitForVisibility(WebDriverWait wait, By selector)
 ```
 
-*
+* SharkScrapper
     * set timeout until element will be enable
 ```c#
       bool GetElementWaitForEnabled(WebDriverWait wait, IWebElement forElement)
 ```
 
-*
+* SharkScrapper
     * sending keys to e.g. Input that need some kind of value
 ```c#
       void WaitWithSendKeys(IWebDriver driver, TimeSpan forTime, By selector, string keys)
 ```
 
-*
+* SharkScrapper
     * Navigate browser to web page with passed URL
 ```c#
       void NavigateToWebPage(IWebDriver driver, string url)
 ```
 
-*
+* SharkScrapper
     * Refresh actual web page
 ```c#
       void RefreshPage(IWebDriver driver)
 ```
 
-TO DO
-----------------------
-+ Make SharkScrapper for scrapping page without call selenium package
+### if you want to make web scrapping without run selenium and it's drivers call class ``SharkRequest()``
 
+* SharkRequest
+    * 
+
+### To make action on scrapping web page without run selenium you need to create your own scrapper class and extends ``SharkStaticScrapper`` abstract class
+
+* SharkStaticScrapper
+    * 
 
 License
 ----------------------
