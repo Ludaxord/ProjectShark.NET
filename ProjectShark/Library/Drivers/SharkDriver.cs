@@ -16,7 +16,7 @@ namespace ProjectShark.Library.Drivers{
         /// <summary>
         /// Getter, Setter for passed driver
         /// </summary>
-        protected IWebDriver Driver{ get; set; }
+        public IWebDriver Driver{ get; set; }
 
         /// <summary>
         /// Getter, Setter for passed options
@@ -26,7 +26,7 @@ namespace ProjectShark.Library.Drivers{
         /// <summary>
         /// Getter, Setter for passed scrapper
         /// </summary>
-        protected SharkScrapper Scrapper{ get; set; }
+        public SharkScrapper Scrapper{ get; set; }
 
         /// <summary>
         /// Getter, Setter for passed browser name
