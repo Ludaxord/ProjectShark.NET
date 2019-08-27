@@ -2,13 +2,14 @@ using System;
 using System.IO;
 using System.Net;
 using HtmlAgilityPack;
+using ProjectShark.Library.Interfaces;
 using ProjectShark.Library.Scrappers;
 
 namespace ProjectShark.Library.Requests{
     /// <summary>
     /// sealed class defines static download of page and make request without call selenium.
     /// </summary>
-    public sealed class SharkRequest{
+    public sealed class SharkRequest: IRequest{
         /// <summary>
         /// Getter, Setter for passed url
         /// </summary>

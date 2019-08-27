@@ -78,6 +78,41 @@ example of usage with SharkRequest:
                 }
             }
        }
+```    
+
+example of usage with CitySharkDriver:
+
+```c#
+        class Program{
+            static void Main(string[] args){
+                var citySharkRun = new CitySharkRun();
+                citySharkRun.CityRun();
+            }
+    
+
+            private class CitySharkExampleScrapper : CitySharkScrapper{
+            }
+
+            private class CitySharkRun{
+                public void CityRun(){
+                    var options = new List<string>();
+                    var scrapper = new CitySharkExampleScrapper();
+    
+                    CitySharkDriver firefoxDriver = new CitySharkFirefoxDriver(
+                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                        TimeSpan.FromMinutes(1),
+                        scrapper,
+                        "https://www.example.com/",
+                        options);
+    
+                    Console.WriteLine(scrapper.GetFullPage(firefoxDriver.Driver));
+    
+                    firefoxDriver = new CitySharkRequestDriver("https://www.example.com/", scrapper);
+                    
+                    Console.WriteLine(scrapper.GetFullPage(firefoxDriver.HtmlDocument));
+                }
+            }
+       }
 ```
 
 
