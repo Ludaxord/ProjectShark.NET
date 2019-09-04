@@ -73,6 +73,10 @@ namespace ProjectShark.Library.Requests{
             Cookies = new CookieContainer();
         }
         
+        
+        /// <summary>
+        /// Get Cookies List method
+        /// </summary>
         private async Task<List<Cookie>> GetCookies(string url){
             var cookieContainer = new CookieContainer();
             var uri = new Uri(url);
