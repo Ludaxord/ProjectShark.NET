@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using ProjectShark.Library.Scrappers.CityScrappers;
 
@@ -40,7 +41,7 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// Initializer of web request
         /// </summary>
         protected override void InitWebRequest(bool withCookies){
-            Html = withCookies ? GetHtmlWithCookies(Url) : GetHtml(Url);
+            Html = withCookies ? Task.Run(async () => await GetHtmlWithCookies(Url)).Result : GetHtml(Url);
             Scrapper.Html = Html;
             HtmlDocument = GetDocument(Html);
         }

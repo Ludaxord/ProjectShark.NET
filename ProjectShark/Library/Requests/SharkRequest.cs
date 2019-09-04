@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using ProjectShark.Library.Interfaces;
 using ProjectShark.Library.Scrappers;
@@ -34,6 +38,11 @@ namespace ProjectShark.Library.Requests{
         /// Getter, Setter for passed Cookies
         /// </summary>
         public CookieContainer Cookies{ get; set; }
+        
+        /// <summary>
+        /// Getter, Setter for passed Cookies list
+        /// </summary>
+        public List<Cookie> CookiesList{ get; set; }
 
         /// <summary>
         /// Constructor that create request with default parameters
@@ -52,7 +61,7 @@ namespace ProjectShark.Library.Requests{
         /// Initializer of request
         /// </summary>
         public void InitRequest(bool withCookies){
-            Html = withCookies ? GetHtmlWithCookies(Url) : GetHtml(Url);
+            Html = withCookies ? Task.Run(async () => await GetHtmlWithCookies(Url)).Result : GetHtml(Url);
             Scrapper.Html = Html;
             HtmlDocument = GetDocument(Html);
         }
@@ -63,6 +72,19 @@ namespace ProjectShark.Library.Requests{
         public void ClearCookies(){
             Cookies = new CookieContainer();
         }
+        
+        private async Task<List<Cookie>> GetCookies(string url){
+            var cookieContainer = new CookieContainer();
+            var uri = new Uri(url);
+            using (var httpClientHandler = new HttpClientHandler{
+                CookieContainer = cookieContainer
+            }){
+                using (var httpClient = new HttpClient(httpClientHandler)){
+                    await httpClient.GetAsync(uri);
+                    return cookieContainer.GetCookies(uri).Cast<Cookie>().ToList();
+                }
+            }
+        }
 
         /// <summary>
         /// Get html from url. Make HTTP Request to page also saving cookies in Cookies property
@@ -70,7 +92,7 @@ namespace ProjectShark.Library.Requests{
         /// <param name="url">passed Url</param>
         /// <returns>string with HTML</returns>
         /// <exception cref="Exception">Problem with getting html from url</exception>
-        public string GetHtmlWithCookies(string url){
+        public async Task<string> GetHtmlWithCookies(string url){
             ClearCookies();
             string sHtml;
             try{
@@ -78,7 +100,7 @@ namespace ProjectShark.Library.Requests{
 
                 webRequest.Method = "GET";
 
-                webRequest.CookieContainer = Cookies;
+                Cookies = webRequest.CookieContainer;
 
                 var webResponse = (HttpWebResponse) webRequest.GetResponse();
 
@@ -87,6 +109,11 @@ namespace ProjectShark.Library.Requests{
 
                 sHtml = webSource.ReadToEnd();
                 webResponse.Close();
+                
+                
+                var cookies = GetCookies(url);
+
+                CookiesList = await Task.Run(() => cookies);
                 
             }
             catch (Exception e){

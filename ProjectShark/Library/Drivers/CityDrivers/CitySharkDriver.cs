@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -10,6 +13,7 @@ using OpenQA.Selenium.Firefox;
 using ProjectShark.Library.Extensions;
 using ProjectShark.Library.Interfaces;
 using ProjectShark.Library.Scrappers.CityScrappers;
+using Cookie = System.Net.Cookie;
 
 namespace ProjectShark.Library.Drivers.CityDrivers{
     public abstract class CitySharkDriver : IDriver, IRequest{
@@ -63,6 +67,12 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// </summary>
         public CookieContainer Cookies{ get; set; }
 
+
+        /// <summary>
+        /// Getter, Setter for passed Cookies list
+        /// </summary>
+        public List<Cookie> CookiesList{ get; set; }
+
         /// <summary>
         /// Constructor that create request with default parameters
         /// </summary>
@@ -75,7 +85,7 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
             Scrapper.Url = url;
             InitRequest(withCookies);
         }
-        
+
         /// <summary>
         /// Clear cookies method, create new CookieContainer 
         /// </summary>
@@ -89,15 +99,14 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <param name="url">passed Url</param>
         /// <returns>string with HTML</returns>
         /// <exception cref="Exception">Problem with getting html from url</exception>
-        public string GetHtmlWithCookies(string url){
-            ClearCookies();
+        public async Task<string> GetHtmlWithCookies(string url){
             string sHtml;
             try{
                 var webRequest = (HttpWebRequest) WebRequest.Create(url);
 
                 webRequest.Method = "GET";
 
-                webRequest.CookieContainer = Cookies;
+                Cookies = webRequest.CookieContainer;
 
                 var webResponse = (HttpWebResponse) webRequest.GetResponse();
 
@@ -106,7 +115,10 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
 
                 sHtml = webSource.ReadToEnd();
                 webResponse.Close();
-                
+
+                var cookies = GetCookies(url);
+
+                CookiesList = await Task.Run(() => cookies);
             }
             catch (Exception e){
                 Console.WriteLine(e);
@@ -114,6 +126,19 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
             }
 
             return sHtml;
+        }
+
+        private async Task<List<Cookie>> GetCookies(string url){
+            var cookieContainer = new CookieContainer();
+            var uri = new Uri(url);
+            using (var httpClientHandler = new HttpClientHandler{
+                CookieContainer = cookieContainer
+            }){
+                using (var httpClient = new HttpClient(httpClientHandler)){
+                    await httpClient.GetAsync(uri);
+                    return cookieContainer.GetCookies(uri).Cast<Cookie>().ToList();
+                }
+            }
         }
 
         /// <summary>
