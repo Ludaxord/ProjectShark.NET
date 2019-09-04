@@ -8,6 +8,8 @@ namespace ProjectShark.Library.Interfaces{
     internal interface IScrapper{
         string Url{ get; set; }
 
+        object GetXhr(IWebDriver driver);
+
         IJavaScriptExecutor CreateJavaScriptExecutor(IWebDriver driver);
 
         IWebElement GetElementByClassName(IWebDriver webDriver, string className);

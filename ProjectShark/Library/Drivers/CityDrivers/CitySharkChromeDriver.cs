@@ -63,7 +63,7 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <summary>
         /// Initializer of request
         /// </summary>
-        protected override void InitWebRequest(){
+        protected override void InitWebRequest(bool withCookies){
         }
     }
 }

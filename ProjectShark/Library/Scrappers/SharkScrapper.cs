@@ -18,6 +18,27 @@ namespace ProjectShark.Library.Scrappers{
         /// </summary>
         public string Url{ get; set; }
 
+
+        /// <summary>
+        /// Get all requests from console
+        /// </summary>
+        /// <param name="driver">passed web driver</param>
+        /// <returns>objects from console</returns>
+        /// <exception cref="Exception">Problem with casting</exception>
+        public object GetXhr(IWebDriver driver){
+            const string scriptToExecute =
+                "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
+            try{
+                var executor = CreateJavaScriptExecutor(driver);
+                var netData = executor.ExecuteScript(scriptToExecute);
+                return netData;
+            }
+            catch (Exception e){
+                Console.WriteLine(e);
+                throw new Exception($"Cannot get xhr from driver");
+            }
+        }
+
         /// <summary>
         /// Cast driver to JavaScriptExecutor Interface
         /// </summary>

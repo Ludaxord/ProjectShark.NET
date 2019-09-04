@@ -31,24 +31,70 @@ namespace ProjectShark.Library.Requests{
         public SharkStaticScrapper Scrapper{ get; set; }
 
         /// <summary>
+        /// Getter, Setter for passed Cookies
+        /// </summary>
+        public CookieContainer Cookies{ get; set; }
+
+        /// <summary>
         /// Constructor that create request with default parameters
         /// </summary>
         /// <param name="url">passed url of web page</param>
         /// <param name="scrapper">passed scrapper of page</param>
-        public SharkRequest(string url, SharkStaticScrapper scrapper){
+        /// <param name="withCookies">save cookies with web request</param>
+        public SharkRequest(string url, SharkStaticScrapper scrapper, bool withCookies = false){
             Url = url;
             Scrapper = scrapper;
             Scrapper.Url = url;
-            InitRequest();
+            InitRequest(withCookies);
         }
 
         /// <summary>
         /// Initializer of request
         /// </summary>
-        public void InitRequest(){
-            Html = GetHtml(Url);
+        public void InitRequest(bool withCookies){
+            Html = withCookies ? GetHtmlWithCookies(Url) : GetHtml(Url);
             Scrapper.Html = Html;
             HtmlDocument = GetDocument(Html);
+        }
+
+        /// <summary>
+        /// Clear cookies method, create new CookieContainer 
+        /// </summary>
+        public void ClearCookies(){
+            Cookies = new CookieContainer();
+        }
+
+        /// <summary>
+        /// Get html from url. Make HTTP Request to page also saving cookies in Cookies property
+        /// </summary>
+        /// <param name="url">passed Url</param>
+        /// <returns>string with HTML</returns>
+        /// <exception cref="Exception">Problem with getting html from url</exception>
+        public string GetHtmlWithCookies(string url){
+            ClearCookies();
+            string sHtml;
+            try{
+                var webRequest = (HttpWebRequest) WebRequest.Create(url);
+
+                webRequest.Method = "GET";
+
+                webRequest.CookieContainer = Cookies;
+
+                var webResponse = (HttpWebResponse) webRequest.GetResponse();
+
+                var webSource = new StreamReader(webResponse.GetResponseStream() ??
+                                                 throw new Exception("Cannot get request from stream"));
+
+                sHtml = webSource.ReadToEnd();
+                webResponse.Close();
+                
+            }
+            catch (Exception e){
+                Console.WriteLine(e);
+                throw new Exception($"Cannot get html from url {url}");
+            }
+
+            return sHtml;
         }
 
         /// <summary>

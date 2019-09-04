@@ -5,7 +5,7 @@
         <Authors>Konrad Uciechowski</Authors>
         <RepositoryUrl>https://github.com/Ludaxord/ProjectShark.NET</RepositoryUrl>
         <PackageLicenseUrl>https://github.com/Ludaxord/ProjectShark.NET/blob/master/LICENSE</PackageLicenseUrl>
-        <PackageVersion>1.0.6</PackageVersion>
+        <PackageVersion>1.0.7</PackageVersion>
         <Title>ProjectShark</Title>
     </PropertyGroup>
     

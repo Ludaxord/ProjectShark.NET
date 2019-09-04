@@ -37,6 +37,13 @@ namespace ProjectShark.Library.Scrappers.CityScrappers{
                 throw new Exception($"Cannot cast IWebDriver to IJavaScriptExecutor");
             }
         }
+        
+        public object GetXhr(IWebDriver driver){
+            const string scriptToExecute = "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
+            var executor = CreateJavaScriptExecutor(driver);
+            var netData = executor.ExecuteScript(scriptToExecute);
+            return netData;
+        }
 
         /// <summary>
         /// Find element in scrapped web page by class name. Note that if there is more than one element with passed className it will return only first one. To return collection of element check GetElementsByClassName method

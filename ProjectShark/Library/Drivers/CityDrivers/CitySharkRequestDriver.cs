@@ -8,11 +8,12 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
     /// City Shark Request Driver (geckoDriver) implementation of CitySharkDriver abstract class. 
     /// </summary>
     public class CitySharkRequestDriver : CitySharkDriver{
-        
-        public CitySharkRequestDriver(string url, CitySharkScrapper scrapper) : base(url, scrapper){
+        public CitySharkRequestDriver(string url, CitySharkScrapper scrapper, bool withCookies = false) : base(url,
+            scrapper, withCookies){
         }
 
-        private CitySharkRequestDriver(string browser, string driverPath, TimeSpan timeSpan, List<string> options = null)
+        private CitySharkRequestDriver(string browser, string driverPath, TimeSpan timeSpan,
+            List<string> options = null)
             : base(browser, driverPath, timeSpan, options){
         }
 
@@ -24,7 +25,7 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
             string url, List<string> options = null) : base(browser, driverPath, timeSpan, scrapper, url, options){
         }
 
-        
+
         /// <summary>
         /// Implementation of abstract method InitWebDriver from CitySharkDriver abstract class.
         /// Method return FirefoxWebDriver specified by browser
@@ -38,8 +39,8 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <summary>
         /// Initializer of web request
         /// </summary>
-        protected override void InitWebRequest(){
-            Html = GetHtml(Url);
+        protected override void InitWebRequest(bool withCookies){
+            Html = withCookies ? GetHtmlWithCookies(Url) : GetHtml(Url);
             Scrapper.Html = Html;
             HtmlDocument = GetDocument(Html);
         }
