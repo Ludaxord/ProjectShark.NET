@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -24,7 +25,7 @@ namespace ProjectShark.Library.Scrappers{
         /// </summary>
         /// <param name="driver">passed web driver</param>
         /// <returns>objects from console</returns>
-        /// <exception cref="Exception">Problem with casting</exception>
+        /// <exception cref="Exception">Problem with get xhr</exception>
         public object GetXhr(IWebDriver driver){
             const string scriptToExecute =
                 "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
@@ -36,6 +37,23 @@ namespace ProjectShark.Library.Scrappers{
             catch (Exception e){
                 Console.WriteLine(e);
                 throw new Exception($"Cannot get xhr from driver");
+            }
+        }
+
+        /// <summary>
+        /// Get all cookies from web driver
+        /// </summary>
+        /// <param name="driver">passed web driver</param>
+        /// <returns>Read Only Collection of cookies from session</returns>
+        /// <exception cref="Exception">Problem with get cookie</exception>
+        public IReadOnlyCollection<Cookie> GetCookiesWithSelenium(IWebDriver driver){
+            try{
+                var cookies = driver.Manage().Cookies;
+                return cookies.AllCookies;
+            }
+            catch (Exception e){
+                Console.WriteLine(e);
+                throw new Exception($"Cannot get cookies from driver");
             }
         }
 

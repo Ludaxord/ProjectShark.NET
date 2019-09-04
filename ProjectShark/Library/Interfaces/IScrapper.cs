@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -9,7 +10,7 @@ namespace ProjectShark.Library.Interfaces{
         string Url{ get; set; }
 
         object GetXhr(IWebDriver driver);
-
+        IReadOnlyCollection<Cookie> GetCookiesWithSelenium(IWebDriver driver);
         IJavaScriptExecutor CreateJavaScriptExecutor(IWebDriver driver);
 
         IWebElement GetElementByClassName(IWebDriver webDriver, string className);

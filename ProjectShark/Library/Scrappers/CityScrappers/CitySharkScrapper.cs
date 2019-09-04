@@ -38,11 +38,35 @@ namespace ProjectShark.Library.Scrappers.CityScrappers{
             }
         }
         
+        
+        /// <summary>
+        /// Get all requests from console
+        /// </summary>
+        /// <param name="driver">passed web driver</param>
+        /// <returns>objects from console</returns>
+        /// <exception cref="Exception">Problem with get xhr</exception>
         public object GetXhr(IWebDriver driver){
             const string scriptToExecute = "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
             var executor = CreateJavaScriptExecutor(driver);
             var netData = executor.ExecuteScript(scriptToExecute);
             return netData;
+        }
+        
+        /// <summary>
+        /// Get all cookies from web driver
+        /// </summary>
+        /// <param name="driver">passed web driver</param>
+        /// <returns>Read Only Collection of cookies from session</returns>
+        /// <exception cref="Exception">Problem with get cookie</exception>
+        public IReadOnlyCollection<Cookie> GetCookiesWithSelenium(IWebDriver driver){
+            try{
+                var cookies = driver.Manage().Cookies;
+                return cookies.AllCookies;
+            }
+            catch (Exception e){
+                Console.WriteLine(e);
+                throw new Exception($"Cannot get cookies from driver");
+            }
         }
 
         /// <summary>
