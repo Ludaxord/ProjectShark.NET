@@ -268,7 +268,7 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         protected void InitDriver(){
             Driver = InitWebDriver(DriverPath);
             WindowSize(Driver);
-            SetFullScreen(Driver);
+//            SetFullScreen(Driver);
             SetTimeoutsForItemsVisibility(Driver, TimeOut);
         }
 
