@@ -80,6 +80,28 @@ example of usage with SharkRequest:
        }
 ```    
 
+example of usage with SharkRequest with proxy:
+
+```c#
+        class Program{
+            static void Main(string[] args){
+                var sharkStaticRun = new SharkStaticRun();
+                sharkStaticRun.RunDriver();
+            }
+    
+            private class SharkStaticExampleScrapper : SharkStaticScrapper{
+            }
+    
+            private class SharkStaticRun{
+                public void RunDriver(){           
+                    var proxy = new WebProxy{Address = new Uri("http://localhost:9897")};
+                    var request = new SharkRequest("https://www.example.com/", new SharkStaticExampleScrapper(), withWebProxy = proxy);
+                    var html = request.Scrapper.GetFullPage(request.HtmlDocument);
+                }
+            }
+       }
+```    
+
 example of usage with CitySharkDriver:
 
 ```c#
@@ -98,22 +120,50 @@ example of usage with CitySharkDriver:
                     var options = new List<string>();
                     var scrapper = new CitySharkExampleScrapper();
     
-                    CitySharkDriver firefoxDriver = new CitySharkFirefoxDriver(
+                    CitySharkDriver driver = new CitySharkFirefoxDriver(
                         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                         TimeSpan.FromMinutes(1),
                         scrapper,
                         "https://www.example.com/",
                         options);
     
-                    Console.WriteLine(scrapper.GetFullPage(firefoxDriver.Driver));
+                    Console.WriteLine(scrapper.GetFullPage(driver.Driver));
     
-                    firefoxDriver = new CitySharkRequestDriver("https://www.example.com/", scrapper);
+                    driver = new CitySharkRequestDriver("https://www.example.com/", scrapper);
+                    
+                    Console.WriteLine(scrapper.GetFullPage(driver.HtmlDocument));
+                }
+            }
+       }
+```                 
+
+example of usage with CitySharkDriver:
+   
+```c#
+        class Program{
+            static void Main(string[] args){
+                var citySharkRun = new CitySharkRun();
+                citySharkRun.CityRun();
+            }
+    
+
+            private class CitySharkExampleScrapper : CitySharkScrapper{
+            }
+
+            private class CitySharkRun{
+                public void CityRun(){
+                    var options = new List<string>();
+                    var scrapper = new CitySharkExampleScrapper();        
+                    var proxy = new WebProxy{Address = new Uri("http://localhost:9897")};
+    
+                    CitySharkDriver driver = new CitySharkRequestDriver("https://www.example.com/", scrapper, withWebProxy = proxy);
                     
                     Console.WriteLine(scrapper.GetFullPage(firefoxDriver.HtmlDocument));
                 }
             }
        }
-```
+```    
+
 
 
 Documentation
