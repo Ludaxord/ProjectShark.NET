@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using ProjectShark.Library.Scrappers.CityScrappers;
@@ -9,8 +10,9 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
     /// City Shark Request Driver (geckoDriver) implementation of CitySharkDriver abstract class. 
     /// </summary>
     public class CitySharkRequestDriver : CitySharkDriver{
-        public CitySharkRequestDriver(string url, CitySharkScrapper scrapper, bool withCookies = false) : base(url,
-            scrapper, withCookies){
+        public CitySharkRequestDriver(string url, CitySharkScrapper scrapper, bool withCookies = false,
+            WebProxy withWebProxy = null) : base(url,
+            scrapper, withCookies, withWebProxy){
         }
 
         private CitySharkRequestDriver(string browser, string driverPath, TimeSpan timeSpan,
@@ -40,8 +42,10 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <summary>
         /// Initializer of web request
         /// </summary>
-        protected override void InitWebRequest(bool withCookies){
-            Html = withCookies ? Task.Run(async () => await GetHtmlWithCookies(Url)).Result : GetHtml(Url);
+        protected override void InitWebRequest(bool withCookies, WebProxy withWebProxy = null){
+            Html = withCookies
+                ? Task.Run(async () => await GetHtmlWithCookies(Url, withWebProxy)).Result
+                : GetHtml(Url, withWebProxy);
             Scrapper.Html = Html;
             HtmlDocument = GetDocument(Html);
         }

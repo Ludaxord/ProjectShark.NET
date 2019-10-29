@@ -13,7 +13,7 @@ namespace ProjectShark.Library.Requests{
     /// <summary>
     /// sealed class defines static download of page and make request without call selenium.
     /// </summary>
-    public sealed class SharkRequest: IRequest{
+    public sealed class SharkRequest : IRequest{
         /// <summary>
         /// Getter, Setter for passed url
         /// </summary>
@@ -38,7 +38,7 @@ namespace ProjectShark.Library.Requests{
         /// Getter, Setter for passed Cookies
         /// </summary>
         public CookieContainer Cookies{ get; set; }
-        
+
         /// <summary>
         /// Getter, Setter for passed Cookies list
         /// </summary>
@@ -50,18 +50,22 @@ namespace ProjectShark.Library.Requests{
         /// <param name="url">passed url of web page</param>
         /// <param name="scrapper">passed scrapper of page</param>
         /// <param name="withCookies">save cookies with web request</param>
-        public SharkRequest(string url, SharkStaticScrapper scrapper, bool withCookies = false){
+        /// <param name="withWebProxy">use proxy server with web request</param>
+        public SharkRequest(string url, SharkStaticScrapper scrapper, bool withCookies = false,
+            WebProxy withWebProxy = null){
             Url = url;
             Scrapper = scrapper;
             Scrapper.Url = url;
-            InitRequest(withCookies);
+            InitRequest(withCookies, withWebProxy);
         }
 
         /// <summary>
         /// Initializer of request
         /// </summary>
-        public void InitRequest(bool withCookies){
-            Html = withCookies ? Task.Run(async () => await GetHtmlWithCookies(Url)).Result : GetHtml(Url);
+        public void InitRequest(bool withCookies, WebProxy withWebProxy = null){
+            Html = withCookies
+                ? Task.Run(async () => await GetHtmlWithCookies(Url, withWebProxy)).Result
+                : GetHtml(Url, withWebProxy);
             Scrapper.Html = Html;
             HtmlDocument = GetDocument(Html);
         }
@@ -72,8 +76,8 @@ namespace ProjectShark.Library.Requests{
         public void ClearCookies(){
             Cookies = new CookieContainer();
         }
-        
-        
+
+
         /// <summary>
         /// Get Cookies List method
         /// </summary>
@@ -94,9 +98,10 @@ namespace ProjectShark.Library.Requests{
         /// Get html from url. Make HTTP Request to page also saving cookies in Cookies property
         /// </summary>
         /// <param name="url">passed Url</param>
+        /// <param name="withWebProxy">usage of proxy server</param>
         /// <returns>string with HTML</returns>
         /// <exception cref="Exception">Problem with getting html from url</exception>
-        public async Task<string> GetHtmlWithCookies(string url){
+        public async Task<string> GetHtmlWithCookies(string url, WebProxy withWebProxy = null){
             ClearCookies();
             string sHtml;
             try{
@@ -113,12 +118,11 @@ namespace ProjectShark.Library.Requests{
 
                 sHtml = webSource.ReadToEnd();
                 webResponse.Close();
-                
-                
+
+
                 var cookies = GetCookies(url);
 
                 CookiesList = await Task.Run(() => cookies);
-                
             }
             catch (Exception e){
                 Console.WriteLine(e);
@@ -132,9 +136,10 @@ namespace ProjectShark.Library.Requests{
         /// Get html from url. Make HTTP Request to page
         /// </summary>
         /// <param name="url">passed Url</param>
+        /// <param name="withWebProxy">usage of proxy server</param>
         /// <returns>string with HTML</returns>
         /// <exception cref="Exception">Problem with getting html from url</exception>
-        public string GetHtml(string url){
+        public string GetHtml(string url, WebProxy withWebProxy = null){
             string sHtml;
             try{
                 var webRequest = (HttpWebRequest) WebRequest.Create(url);

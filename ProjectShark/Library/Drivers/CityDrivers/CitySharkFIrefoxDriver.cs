@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using ProjectShark.Library.Scrappers.CityScrappers;
@@ -63,7 +64,7 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <summary>
         /// Initializer of request
         /// </summary>
-        protected override void InitWebRequest(bool withCookies){
+        protected override void InitWebRequest(bool withCookies, WebProxy withWebProxy = null){
         }
     }
 }

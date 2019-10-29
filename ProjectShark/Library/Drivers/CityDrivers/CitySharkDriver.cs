@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DotNetTor.SocksPort;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -79,11 +80,12 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <param name="url">passed url of web page</param>
         /// <param name="scrapper">passed scrapper of page</param>
         /// <param name="withCookies">save cookies with web request</param>
-        public CitySharkDriver(string url, CitySharkScrapper scrapper, bool withCookies = false){
+        /// <param name="withWebProxy">use web proxy with web request</param>
+        public CitySharkDriver(string url, CitySharkScrapper scrapper, bool withCookies = false, WebProxy withWebProxy = null){
             Url = url;
             Scrapper = scrapper;
             Scrapper.Url = url;
-            InitRequest(withCookies);
+            InitRequest(withCookies, withWebProxy);
         }
 
         /// <summary>
@@ -97,12 +99,17 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// Get html from url. Make HTTP Request to page also saving cookies in Cookies property
         /// </summary>
         /// <param name="url">passed Url</param>
+        /// <param name="withWebProxy">usage of proxy server</param>
         /// <returns>string with HTML</returns>
         /// <exception cref="Exception">Problem with getting html from url</exception>
-        public async Task<string> GetHtmlWithCookies(string url){
+        public async Task<string> GetHtmlWithCookies(string url, WebProxy withWebProxy = null){
             string sHtml;
             try{
                 var webRequest = (HttpWebRequest) WebRequest.Create(url);
+
+                if (withWebProxy != null){
+                    webRequest.Proxy = withWebProxy;
+                }
 
                 webRequest.Method = "GET";
 
@@ -144,20 +151,25 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <summary>
         /// Initializer of request
         /// </summary>
-        public void InitRequest(bool withCookies){
-            InitWebRequest(withCookies);
+        public void InitRequest(bool withCookies, WebProxy withWebProxy = null){
+            InitWebRequest(withCookies, withWebProxy);
         }
 
         /// <summary>
         /// Get html from url. Make HTTP Request to page
         /// </summary>
         /// <param name="url">passed Url</param>
+        /// <param name="withWebProxy">usage of proxy server</param>
         /// <returns>string with HTML</returns>
         /// <exception cref="Exception">Problem with getting html from url</exception>
-        public string GetHtml(string url){
+        public string GetHtml(string url, WebProxy withWebProxy = null){
             string sHtml;
             try{
                 var webRequest = (HttpWebRequest) WebRequest.Create(url);
+
+                if (withWebProxy != null){
+                    webRequest.Proxy = withWebProxy;
+                }
 
                 webRequest.Method = "GET";
 
@@ -260,7 +272,7 @@ namespace ProjectShark.Library.Drivers.CityDrivers{
         /// <summary>
         /// Abstract method that need to be implemented in every SharkDriver class. It defines request that will be loaded to package
         /// </summary>
-        protected abstract void InitWebRequest(bool withCookies);
+        protected abstract void InitWebRequest(bool withCookies, WebProxy withWebProxy = null);
 
         /// <summary>
         /// Initializer of default functions in WebDriver
