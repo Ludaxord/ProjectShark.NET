@@ -37,8 +37,8 @@ namespace ProjectShark.Library.Scrappers.CityScrappers{
                 throw new Exception($"Cannot cast IWebDriver to IJavaScriptExecutor");
             }
         }
-        
-        
+
+
         /// <summary>
         /// Get all requests from console
         /// </summary>
@@ -46,12 +46,13 @@ namespace ProjectShark.Library.Scrappers.CityScrappers{
         /// <returns>objects from console</returns>
         /// <exception cref="Exception">Problem with get xhr</exception>
         public object GetXhr(IWebDriver driver){
-            const string scriptToExecute = "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
+            const string scriptToExecute =
+                "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
             var executor = CreateJavaScriptExecutor(driver);
             var netData = executor.ExecuteScript(scriptToExecute);
             return netData;
         }
-        
+
         /// <summary>
         /// Get all cookies from web driver
         /// </summary>
@@ -582,6 +583,25 @@ namespace ProjectShark.Library.Scrappers.CityScrappers{
             catch (Exception e){
                 Console.WriteLine(e);
                 throw new Exception($"Cannot find elements by className of {className}");
+            }
+        }
+
+        /// <summary>
+        /// Find elements by part of class name in html
+        /// </summary>
+        /// <param name="htmlDocument">passed htmlDocument object</param>
+        /// <param name="partClassName">passed part of class name</param>
+        /// <returns>collection of nodes</returns>
+        /// <exception cref="Exception"></exception>
+        public IEnumerable<HtmlNode> GetElementsByPartOfClassName(HtmlDocument htmlDocument, string partClassName){
+            try{
+                var nodes = htmlDocument.DocumentNode.SelectNodes(
+                    $"//div[contains(concat(' ', normalize-space(@class), ' '), '{partClassName} ')]");
+                return nodes;
+            }
+            catch (Exception e){
+                Console.WriteLine(e);
+                throw new Exception($"Cannot find element by part of class name {partClassName}");
             }
         }
 
